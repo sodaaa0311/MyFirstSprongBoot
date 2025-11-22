@@ -24,10 +24,16 @@ public class StudentController {
 //       return studentService.getStudentById(id);
 //   }
         //此时应该返回dto类型
-       public Studentdto getStudentById(@PathVariable long id){
+//       public Studentdto getStudentById(@PathVariable long id){
+//
+//        student student = studentService.getStudentById(id);
+//        return StudentConverter.converter(student);
+//    }
+        //此时我们返回response
+    public response<Studentdto> getStudentById(@PathVariable long id){
 
         student student = studentService.getStudentById(id);
-        return StudentConverter.converter(student);
+        return response.newSuccess(StudentConverter.converter(student));
     }
 
 }
