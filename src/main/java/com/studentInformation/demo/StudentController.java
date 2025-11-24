@@ -4,10 +4,10 @@ import com.studentInformation.demo.converter.StudentConverter;
 import com.studentInformation.demo.dao.student;
 import com.studentInformation.demo.dto.Studentdto;
 import com.studentInformation.demo.sercive.StudentService;
+import com.studentInformation.demo.sercive.StudentServiceImpl;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class StudentController {
@@ -36,4 +36,50 @@ public class StudentController {
         return response.newSuccess(StudentConverter.converter(student));
     }
 
+    @PostMapping("/student")
+    public response<Long> add(@RequestBody Studentdto studentdto){
+        return response.newSuccess(studentService.addNewStudent(studentdto));
+    }
+
+    @DeleteMapping("/student/{id}")
+    public void deleteById(@PathVariable long id){
+        studentService.deleteById(id);
+    }
+
+    @PutMapping("student/{id}")
+    @Transactional
+    public response<Studentdto> updateById(
+            @PathVariable long id,
+            @RequestParam(required = false)String name,
+            @RequestParam(required = false)String email
+    ){
+        return response.newSuccess(studentService.updateById(id,name,email));
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
